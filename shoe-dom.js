@@ -158,7 +158,7 @@ function createBuyListElement() {
     if (basketList.length > 0)
         message2 = "Shopping List: "
     else
-        message2 = "Currently out stock"
+        message2 = "Currently out of stock"
 
 
     var userData2 = {
