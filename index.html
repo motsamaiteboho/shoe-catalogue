@@ -70,7 +70,7 @@
         </div>
         <div class="display">
             <script type="text/x-template" class="userTemplate">
-                <h3>we have the following shoes in stock: </h3>
+                <h3>{{message}}</h3>
                 {{#each shoes}}
                     <div class="shoe">
                         <span>Brand: {{brand}}</span> <br>
@@ -84,7 +84,7 @@
             <div class="userData">
             </div>
         </div>
-        <div  class="buttons">
+        <div class="buttons">
             <label for="brand">Brand:
                 <input type="text" name="b" id="brand">
             </label>
@@ -100,13 +100,14 @@
             <div class="addshoe">
                 <button class="button-primary AddBtn" type="button" name="button">Add New Shoe</button>
             </div>
+            
         </div>
 
         <h2>Shopping Baskets</h2>
         <div class="basket">
-            <div  class="buttons">
+            <div class="buttons">
                 <label for="brand">Brand:
-                    <input type="text" name="b" id="brand2">
+                    <input type="text" name="brand" id="brand2">
                 </label>
                 <label for="size">Size:
                     <input type="text" name="size" id="size2">
@@ -120,29 +121,29 @@
                 <div class="buyshoe">
                     <button class="button-primary BuyBtn" type="button" name="button">Buy Shoe</button>
                 </div>
+                <div class="removeshoe">
+                    <button class="button-primary ClearBtn" type="button" name="button">clear basket</button>
+                </div>
             </div>
-            
-            <script type="text/x-template" class="userTemplate">
-                <h3>Shopping list: </h3>
+
+            <script type="text/x-template" class="userTemplate2">
+                <h3>{{message}}</h3>
                 {{#each shoes}}
-                <div class="shoe">
+                <div class="shoe2">
                     <span>Brand : {{brand}}</span> <br>
                     <span>Color : {{color}}</span> <br>
                     <span>Size  : {{size}}</span> <br>
                     <span>price : {{price}}</span> <br>
                 </div>
                 {{/each}}
-                <div class ="total">Total cost : {{TotalCost}}</div>
-                <div class="removeshoe">
-                    <button class="button-primary RemoveBtn" type="button" name="button">Remove all</button>
-                </div>
+                <div class ="total">Total cost : {{total}}</div>
+
             </div>
             </script>
 
-            <div class="userData">
+            <div class="userData2">
             </div>
-
-           
+        </div>
     </div>
     <script src="shoe.js" charset="utf-8"></script>
     <script src="shoe-dom.js" charset="utf-8"></script>

@@ -6,7 +6,9 @@ var searchBtn = document.querySelector(".searchBtn");
 
 var shoesCatalogue = ShoeCatalogue();
 var filtered = [];
+var BuyList = [];
 function searchShoes() {
+    filtered = [];
     var color = colorElem.value;
     var size = sizeElem.value;
     var brand = brandElem.value;
@@ -67,7 +69,7 @@ function searchShoes() {
         }
     }
     createElement();
-    filtered = [];
+    
 }
 searchBtn.addEventListener('click', searchShoes);
 function createElement() {
@@ -79,7 +81,15 @@ function createElement() {
 
     // get a reference to tableBody where users is to be displayed
     var userDataElem = document.querySelector(".userData");
+    var message = "";
+    if (filtered.length > 0)
+        message = "we have the following shoes in stock"
+    else
+        message = "item not available"
+
+
     var userData = {
+        message: message,
         shoes: filtered
     };
 
@@ -99,36 +109,78 @@ function addShoe() {
     {
         color: colorElem2.value,
         brand: brandElem2.value,
-        size: sizeElem2.value,
-        price: priceElem2.value,
-        in_stock: 1,
+        size: Number(sizeElem2.value),
+        price: Number(priceElem2.value)
     }
-    var shoes = shoesCatalogue.allshoes();
-    var isfound = false;
-    shoes.forEach(shoe => {
-        for (const key in shoe) {
-            if (key != "in_stock") {
-                if (shoe[key] == newshoe[key])
-                    shoe[key]++;
-            }
-        }
-        alert(shoe.in_stock)
-    })
-    if (!isfound)
-        shoesCatalogue.addNewShoe(newshoe);
+    shoesCatalogue.addNewShoe(newshoe);
+
+    if(filtered.length > 0){
+        searchShoes();
+    }
+       
 }
 AddBtn.addEventListener('click', addShoe)
 
-function shallowEqual(object1, object2) {
-    const keys1 = Object.keys(object1);
-    const keys2 = Object.keys(object2);
-    if (keys1.length !== keys2.length) {
-        return false;
+var priceElem3 = document.getElementById("price2")
+var colorElem3 = document.getElementById("color2");
+var sizeElem3 = document.getElementById("size2");
+var brandElem3 = document.getElementById("brand2");
+var BuyBtn = document.querySelector(".BuyBtn");
+
+function buyShoe() {
+    var buyshoe =
+    {
+        color: colorElem3.value,
+        brand: brandElem3.value,
+        size: Number(sizeElem3.value),
+        price: Number(priceElem3.value),
     }
-    for (let key of keys1) {
-        if (object1[key] !== object2[key]) {
-            return false;
-        }
+    shoesCatalogue.BuyShoe(buyshoe);
+    createBuyListElement()
+
+    if(filtered.length > 0){
+        searchShoes();
     }
-    return true;
 }
+BuyBtn.addEventListener('click', buyShoe)
+
+function createBuyListElement() {
+    // get a reference to the template script tag
+    var templateSource2 = document.querySelector(".userTemplate2").innerHTML;
+
+    // compile the template
+    var userTemplate2 = Handlebars.compile(templateSource2);
+
+    // get a reference to tableBody where users is to be displayed
+    var userDataElem2 = document.querySelector(".userData2");
+    var message2 = "";
+    var basketList = shoesCatalogue.shoeOnBasket();
+    if (basketList.length > 0)
+        message2 = "Shopping List: "
+    else
+        message2 = "Currently out stock"
+
+
+    var userData2 = {
+        message: message2,
+        total: shoesCatalogue.buyTotal(),
+        shoes: basketList
+    };
+
+    // compile the template
+    var userDataHTML2 = userTemplate2(userData2);
+    userDataElem2.innerHTML = userDataHTML2;
+}
+
+var removeBtn = document.querySelector(".ClearBtn");
+function removeitems(){
+     //remove all current plates
+     const elementList = document.querySelectorAll(".shoe2")
+     const elementEl = document.querySelector(".total")
+     for (let i = 0; i < elementList.length; i++) {
+         elementList[i].remove();
+     }
+     elementEl.innerHTML = "Total cost : 0"
+    shoesCatalogue.removeitems();
+}
+removeBtn.addEventListener('click',removeitems)

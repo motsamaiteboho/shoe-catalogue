@@ -145,8 +145,9 @@ function ShoeCatalogue() {
 
     var shoesbasket = [];
     var shoesfiltered = [];
+    var total = 0;
 
-    function allshoes(){
+    function allshoes() {
         return shoes;
     }
     function SearchByColor(color) {
@@ -167,15 +168,74 @@ function ShoeCatalogue() {
     function SearchByColorAndBrand(color, brand) {
         return shoes.filter(s => s.color == color && s.brand == brand);
     }
-    function SearchBySizeAndBrand(size,brand) {
+    function SearchBySizeAndBrand(size, brand) {
         return shoes.filter(s => s.size == size && s.brand == brand)
     }
-    function SearchByColorAndSizeAndBrand(color,size,brand) {
+    function SearchByColorAndSizeAndBrand(color, size, brand) {
         return shoes.filter(s => s.color == color && s.size == size && s.brand == brand);
     }
-    function addNewShoe(newshoe){
-         shoes.push(newshoe);
+    function addNewShoe(newshoe) {
+        var exits = false;
+        shoes.forEach(shoe => {
+            let instock = shoe.in_stock;
+            delete shoe.in_stock
+            if (JSON.stringify(newshoe) === JSON.stringify(shoe)) {
+                exits = true;
+                shoe["in_stock"] = instock;
+                for (const key in shoe) {
+                    if (key == "in_stock") {
+                        if (shoe[key] > 0)
+                            shoe[key]++;
+                    }
+                }
+            }
+            if(!exits)
+                shoe["in_stock"] = instock;
+        })
+
+        if(!exits){
+            newshoe["in_stock"] = 1;
+            shoes.push(newshoe);
+        }
     }
+    function BuyShoe(newshoe) {
+        var exits = false;
+        shoes.forEach(shoe => {
+            let instock = shoe.in_stock;
+            delete shoe.in_stock
+            if (JSON.stringify(newshoe) === JSON.stringify(shoe)) {
+                exits = true;
+                shoe["in_stock"] = instock;
+                for (const key in shoe) {
+                    if (key == "in_stock") {
+                        if (shoe[key] > 1)
+                            shoe[key]--;
+                        else
+                            shoes.splice(shoes.indexOf(shoe));
+                    }
+                }
+                total += shoe.price;
+                shoesbasket.push(shoe);
+            }
+            if(!exits)
+                shoe["in_stock"] = instock;
+        })
+    }
+
+    function shoeOnBasket() {
+        return shoesbasket;
+    }
+
+    function buyTotal() {
+        return total;
+    }
+
+    function removeitems()
+    {
+        total =0;
+        shoesbasket = [];
+    }
+    
 
     return {
         SearchByColor,
@@ -187,8 +247,11 @@ function ShoeCatalogue() {
         SearchBySizeAndBrand,
         SearchByColorAndSizeAndBrand,
         addNewShoe,
-        allshoes
-
+        allshoes,
+        BuyShoe,
+        buyTotal,
+        shoeOnBasket,
+        removeitems
     }
 
 
