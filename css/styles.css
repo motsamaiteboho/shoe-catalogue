@@ -114,3 +114,12 @@ input[type=text]{
     margin-bottom: 1em;
     float: left;
 }
+.error{
+    text-align: center;
+}
+.errorMessage {
+    color: rgb(0, 147, 167);
+}
+.errorMessage2 {
+    color: rgb(0, 147, 167);
+}

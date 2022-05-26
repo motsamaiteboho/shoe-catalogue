@@ -100,7 +100,9 @@
             <div class="addshoe">
                 <button class="button-primary AddBtn" type="button" name="button">Add New Shoe</button>
             </div>
-            
+            <div class="error">
+                <span class="errorMessage">...</span>
+            </div>
         </div>
 
         <h2>Shopping Basket</h2>
@@ -121,6 +123,9 @@
                 <div class="buyshoe">
                     <button class="button-primary BuyBtn" type="button" name="button">Buy Shoe</button>
                 </div>
+                <div class="error">
+                    <span class="errorMessage2">...</span>
+                </div>
                 <div class="removeshoe">
                     <button class="button-primary ClearBtn" type="button" name="button">clear basket</button>
                 </div>
@@ -137,7 +142,6 @@
                 </div>
                 {{/each}}
                 <div class ="total">Total cost : {{total}}</div>
-
             </div>
             </script>
 

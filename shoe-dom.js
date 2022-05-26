@@ -102,20 +102,47 @@ var priceElem2 = document.getElementById("price")
 var colorElem2 = document.getElementById("color");
 var sizeElem2 = document.getElementById("size");
 var brandElem2 = document.getElementById("brand");
+const errorMessageElem2= document.querySelector(".errorMessage");
 var AddBtn = document.querySelector(".AddBtn");
 
 function addShoe() {
-    var newshoe =
-    {
-        color: colorElem2.value,
-        brand: brandElem2.value,
-        size: Number(sizeElem2.value),
-        price: Number(priceElem2.value)
+    var sizes = ["3","4","5","6","7"]
+    var brands = ["pama","mike","hadidas","livas"]
+    var colors = ["red","blue","green","black","pink"]
+    let color = colorElem2.value.toLowerCase();
+    let brand = brandElem2.value.toLowerCase();
+    let price = priceElem2.value;
+    let size =  sizeElem2.value;
+    if( color != "" || brand != "" || price != "" || size != ""){
+        if(!isNaN(price) && !isNaN(size) && sizes.includes(size) && brands.includes(brand) && colors.includes(color)){
+            var newshoe =
+            {
+                color: color,
+                brand: brand,
+                size: size,
+                price: price
+            }
+            shoesCatalogue.addNewShoe(newshoe);
+        
+            if(filtered.length > 0){
+                searchShoes();
+            }
+        }
+        else
+        {
+            setTimeout(function () {
+                errorMessageElem2.innerHTML = "...";
+            }, 3000);
+            errorMessageElem2.innerHTML = "Please, enter a valid details ";
+        }
+       
     }
-    shoesCatalogue.addNewShoe(newshoe);
-
-    if(filtered.length > 0){
-        searchShoes();
+    else
+    {
+        setTimeout(function () {
+            errorMessageElem2.innerHTML = "...";
+        }, 3000);
+        errorMessageElem2.innerHTML = "Please, enter all fields are required";
     }
        
 }
@@ -125,22 +152,50 @@ var priceElem3 = document.getElementById("price2")
 var colorElem3 = document.getElementById("color2");
 var sizeElem3 = document.getElementById("size2");
 var brandElem3 = document.getElementById("brand2");
+const errorMessageElem= document.querySelector(".errorMessage2");
 var BuyBtn = document.querySelector(".BuyBtn");
 
 function buyShoe() {
-    var buyshoe =
+    var sizes = ["3","4","5","6","7"]
+    var prices = "^[0-9]{1-110000}$";
+    var brands = ["pama","mike","hadidas","livas"]
+    var colors = ["red","blue","green","black","pink"]
+    var color = colorElem3.value.toLowerCase();
+    var brand = brandElem3.value.toLowerCase();
+    var price = priceElem3.value;
+    var size =  sizeElem3.value;
+    if( color != "" || brand != "" || price != "" || size != ""){
+        if(!isNaN(price) && !isNaN(size) && sizes.includes(size)  && brands.includes(brand) && colors.includes(color)){
+            var buyshoe =
+            {
+                color: color,
+                brand: brandElem3.value,
+                size: Number(sizeElem3.value),
+                price: Number(priceElem3.value),
+            }
+            shoesCatalogue.BuyShoe(buyshoe);
+            createBuyListElement()
+        
+            if(filtered.length > 0){
+                searchShoes();
+            }
+        }
+        else
+        {
+            setTimeout(function () {
+                errorMessageElem.innerHTML = "...";
+            }, 3000);
+            errorMessageElem.innerHTML = "Please, enter a valid details ";
+        }
+    }
+    else
     {
-        color: colorElem3.value,
-        brand: brandElem3.value,
-        size: Number(sizeElem3.value),
-        price: Number(priceElem3.value),
+        setTimeout(function () {
+            errorMessageElem.innerHTML = "...";
+        }, 3000);
+        errorMessageElem.innerHTML = "Please, enter all fields are required";
     }
-    shoesCatalogue.BuyShoe(buyshoe);
-    createBuyListElement()
-
-    if(filtered.length > 0){
-        searchShoes();
-    }
+   
 }
 BuyBtn.addEventListener('click', buyShoe)
 
@@ -180,7 +235,8 @@ function removeitems(){
      for (let i = 0; i < elementList.length; i++) {
          elementList[i].remove();
      }
-     elementEl.innerHTML = "Total cost : 0"
+     if(elementEl != null)
+        elementEl.innerHTML = "Total cost : 0"
     shoesCatalogue.removeitems();
 }
 removeBtn.addEventListener('click',removeitems)
