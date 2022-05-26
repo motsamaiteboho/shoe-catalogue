@@ -171,7 +171,7 @@ function buyShoe() {
                 color: color,
                 brand: brand,
                 size:  Number(size),
-                price: Number(size),
+                price: Number(price),
             }
             shoesCatalogue.BuyShoe(buyshoe);
             createBuyListElement()
