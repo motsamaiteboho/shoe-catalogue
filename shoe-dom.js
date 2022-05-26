@@ -119,8 +119,8 @@ function addShoe() {
             {
                 color: color,
                 brand: brand,
-                size: size,
-                price: price
+                size: Number(size),
+                price: Number(price)
             }
             shoesCatalogue.addNewShoe(newshoe);
         
@@ -169,9 +169,9 @@ function buyShoe() {
             var buyshoe =
             {
                 color: color,
-                brand: brandElem3.value,
-                size: Number(sizeElem3.value),
-                price: Number(priceElem3.value),
+                brand: brand,
+                size:  Number(size),
+                price: Number(size),
             }
             shoesCatalogue.BuyShoe(buyshoe);
             createBuyListElement()
@@ -214,7 +214,6 @@ function createBuyListElement() {
         message2 = "Shopping List: "
     else
         message2 = "Currently out of stock"
-
 
     var userData2 = {
         message: message2,
